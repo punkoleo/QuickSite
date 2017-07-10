@@ -16,4 +16,5 @@
 /vendor/
 /web/bundles/
 .project
-.composer.lock
+composer.lock
+.buildpath
