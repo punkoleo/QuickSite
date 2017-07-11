@@ -18,3 +18,5 @@
 .project
 composer.lock
 .buildpath
+.idea/
+.settings/

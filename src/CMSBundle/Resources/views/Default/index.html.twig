@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section>
+        <h1>Bienvenue sur Quick Site</h1>
+        <br />
+        <article class="col-md-12">
+            <h2 class="col-md-12">Pourquoi avez vous besoin de nous ?</h2>
+            <div class="col-md-1"></div>
+            <p class="col-md-8">
+                N'avez vous j'amais réver de pouvoir <b>partager facilement</b> avec le monde ?
+                Ici vous pourrez creer vos ressources web en <b>quelques cliques</b>,
+                et les partager avec vos clients a l'aide d'un lien a <b>votre convenance</b>
+            </p>
+        </article>
+        <article class="col-md-12">
+            <h2 class="col-md-12">Est-ce payant ?</h2>
+            <div class="col-md-1"></div>
+            <p class="col-md-8">
+                Ce service est completment <b>Gratuit</b>, nous vivons grace aux revenus publicitaire afin
+                de vous assurer le <b>meilleur service</b>.
+            </p>
+        </article>
+        <article class="col-md-12">
+            <h2 class="col-md-12">J'aimerais autant ne pas avoir de pub</h2>
+            <div class="col-md-1"></div>
+            <p class="col-md-8">
+                Et c'est votre <b>choix</b>, vous pouvez nous aider de differentes manieres.
+                Nous vous invitons a regarde les differentes offres que nous proposons
+            </p>
+        </article>
+        <article class="col-md-12">
+            <h2 class="col-md-12">N'hesitez plus</h2>
+            <div class="col-md-1"></div>
+            <form class="col-md-12" action="{{ path('fos_user_registration_register') }}">
+                <input type="submit" class="btn btn-success btn-lg btn-block" value="Inscrivez vous"/>
+            </form>
+        </article>
+    </section>
+{% endblock %}
