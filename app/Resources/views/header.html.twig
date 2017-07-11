@@ -13,8 +13,17 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-            </ul>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <ul class="nav navbar-nav">
+                    <li
+                            {% if app.request.attributes.get('_route') == 'page_index' %}
+                        class="active"
+                            {% endif %}>
+                        <a href="{{path('page_index') }}">Mes Pages</a>
+                    </li>
+                </ul>
+            {% endif %}
+            <span class="sr-only">Test</span>
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <li class="dropdown">

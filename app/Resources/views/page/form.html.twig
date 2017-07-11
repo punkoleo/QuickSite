@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Page creation</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="col-md-10"></div>
+    <div class="col-md-1">
+        <a class="btn btn-danger" href="{{ path('page_index') }}"> Retour </a>
+    </div>
+    <div class="col-md-1">
+        <input type="submit" class="btn btn-success" value="Valider" />
+    </div>
+    {{ form_end(form) }}
+
+    <ul>
+        <form>
+
+        </form>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        tooglePasswordBloc();
+        var checkboxTopPrivate = $('#cmsbundle_page_topPrivate');
+        checkboxTopPrivate.change(tooglePasswordBloc)
+
+        function tooglePasswordBloc() {
+
+            var blocPassword = $('#cmsbundle_page_password').closest('.form-group');
+            var inputPassword = $('#cmsbundle_page_password');
+            var checkboxTopPrivate = $('#cmsbundle_page_topPrivate');
+
+            if(checkboxTopPrivate.prop('checked')) {
+                blocPassword.css('display', '');
+                inputPassword.prop( "disabled", false );
+            } else {
+                inputPassword.prop( "disabled", true );
+                blocPassword.css('display', 'none');
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Mes pages</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Contenu</th>
+            <th>Lien</th>
+            <th>Page Publiée ?</th>
+            <th>Protégée ?</th>
+            <th>Mot de passe</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for page in pages %}
+            <tr>
+                <td><a href="{{ path('page_show', { 'id': page.id }) }}">{{ page.titre }}</a></td>
+                <td>{{ page.contenu }}</td>
+                <td>{{ page.lien }}</td>
+                <td>
+                    {% if page.topPublic %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if page.topPrivate %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                </td>
+                <td>{{ page.password }}</td>
+                <td>
+                    <a href="{{ path('page_show', { 'id': page.id }) }}">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+
+                    <a href="{{ path('page_edit', { 'id': page.id }) }}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('page_new') }}" class="btn btn-success pull-right">Creer une page</a>
+{% endblock %}
