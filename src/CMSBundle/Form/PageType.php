@@ -5,7 +5,7 @@ namespace CMSBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 class PageType extends AbstractType
 {
     /**
@@ -13,8 +13,14 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre')->add('contenu')->add('lien')->add('topPublic',null,['attr'=>['class']])->add('topPrivate')->add('password');
 
+
+        $builder->add('titre')
+            ->add('contenu', CKEditorType::class, [
+            'config' => [
+                'uiColor' => '#ffffff',
+            ],
+        ])->add('lien')->add('topPublic')->add('topPrivate')->add('password');
     }
 
     /**

@@ -23,7 +23,9 @@ class PageController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $pages = $em->getRepository('CMSBundle:Page')->findBy(['user'=>$this->getUser()]);
+
+        $pages = $em->getRepository('CMSBundle:Page')->findAll();
+
         return $this->render('page/index.html.twig', array(
             'pages' => $pages,
         ));
@@ -38,7 +40,6 @@ class PageController extends Controller
     public function newAction(Request $request)
     {
         $page = new Page();
-        $page->setUser($this->getUser());
         $form = $this->createForm('CMSBundle\Form\PageType', $page);
         $form->handleRequest($request);
 
@@ -92,7 +93,7 @@ class PageController extends Controller
 
         return $this->render('page/edit.html.twig', array(
             'page' => $page,
-            'form' => $editForm->createView(),
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

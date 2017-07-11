@@ -7,7 +7,6 @@
         <thead>
         <tr>
             <th>Titre</th>
-            <th>Contenu</th>
             <th>Lien</th>
             <th>Page Publiée ?</th>
             <th>Protégée ?</th>
@@ -19,7 +18,6 @@
         {% for page in pages %}
             <tr>
                 <td><a href="{{ path('page_show', { 'id': page.id }) }}">{{ page.titre }}</a></td>
-                <td>{{ page.contenu }}</td>
                 <td>{{ page.lien }}</td>
                 <td>
                     {% if page.topPublic %}
