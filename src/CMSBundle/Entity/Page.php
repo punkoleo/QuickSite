@@ -4,6 +4,7 @@ namespace CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Page
  *
@@ -45,7 +46,14 @@ class Page
      * @var string
      *
      * @ORM\Column(name="lien", type="string", length=255)
+     *
+     * @Assert\Regex(
+     *     pattern="/\s/",
+     *     match=false,
+     *     message="pas d\'espaces"
+     * )
      */
+
     private $lien;
 
     /**

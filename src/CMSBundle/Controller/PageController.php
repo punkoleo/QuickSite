@@ -40,6 +40,7 @@ class PageController extends Controller
     public function newAction(Request $request)
     {
         $page = new Page();
+        $page->setUser($this->getUser());
         $form = $this->createForm('CMSBundle\Form\PageType', $page);
         $form->handleRequest($request);
 
@@ -60,7 +61,7 @@ class PageController extends Controller
     /**
      * Finds and displays a page entity.
      *
-     * @Route("/{id}", name="page_show")
+     * @Route("/{id}", name="page_show", requirements={"id": "\d+"})
      * @Method("GET")
      */
     public function showAction(Page $page)
@@ -70,6 +71,19 @@ class PageController extends Controller
         return $this->render('page/show.html.twig', array(
             'page' => $page,
             'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a page entity.
+     *
+     * @Route("/{lien}", name="page_show_lien")
+     * @Method("GET")
+     */
+    public function showfromtokenAction(Page $page)
+    {
+        return $this->render('page/show.html.twig', array(
+            'page' => $page
         ));
     }
 
@@ -93,7 +107,7 @@ class PageController extends Controller
 
         return $this->render('page/edit.html.twig', array(
             'page' => $page,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
