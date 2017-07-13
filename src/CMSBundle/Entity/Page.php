@@ -5,11 +5,13 @@ namespace CMSBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Page
  *
  * @ORM\Table(name="page")
  * @ORM\Entity(repositoryClass="CMSBundle\Repository\PageRepository")
+ * @UniqueEntity(fields="lien", message="Une page avec ce lien existe déjà")
  */
 class Page
 {
@@ -51,6 +53,11 @@ class Page
      *     pattern="/\s/",
      *     match=false,
      *     message="pas d\'espaces"
+     * )
+     * @Assert\Regex(
+     *     pattern="#^\d+$#",
+     *     match=false,
+     *     message="pas que des chiffres"
      * )
      */
 
