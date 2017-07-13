@@ -162,10 +162,9 @@ class PageController extends Controller
         $editForm = $this->createForm('CMSBundle\Form\PageType', $page);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid() && $page->getUser() == $this->getUser()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('page_edit', array('id' => $page->getId()));
+            return $this->redirectToRoute('page_index');
         }
 
         return $this->render('page/edit.html.twig', array(
