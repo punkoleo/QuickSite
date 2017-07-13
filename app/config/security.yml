@@ -14,6 +14,10 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        # Pages : la vue seulement est autorisée a n'importe qui
+        - { path: ^/page/[^/]+$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/page/[^/]+/p/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/page/, role: ROLE_USER }
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:

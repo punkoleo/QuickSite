@@ -1,1 +1,10 @@
-{% extends 'page/form.html.twig' %}
+{% include 'page/form.html.twig' %}
+{% block body %}
+
+        {{ form_start(delete_form) }}
+        {{ form_widget(delete_form) }}
+    <div class="col-md-7">
+            <input type="submit" class="btn btn-danger pull-right" value="Supprimer" />
+    </div>
+        {{ form_end(delete_form) }}
+{% endblock %}

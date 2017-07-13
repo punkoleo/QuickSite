@@ -4,20 +4,9 @@
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="col-md-10"></div>
-    <div class="col-md-1">
-        <a class="btn btn-danger" href="{{ path('page_index') }}"> Retour </a>
-    </div>
-    <div class="col-md-1">
-        <input type="submit" class="btn btn-success" value="Valider" />
-    </div>
+    <a class="btn btn-warning" href="{{ path('page_index') }}"> Retour </a>
+    <input type="submit" class="btn btn-success pull-right" value="Valider" />
     {{ form_end(form) }}
-
-    <ul>
-        <form>
-
-        </form>
-    </ul>
 {% endblock %}
 {% block javascripts %}
     <script>
