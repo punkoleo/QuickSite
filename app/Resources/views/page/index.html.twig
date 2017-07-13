@@ -18,7 +18,7 @@
         {% for page in pages %}
             <tr>
                 <td><a href="{{ path('page_show', { 'id': page.id }) }}">{{ page.titre }}</a></td>
-                <td>{{ page.lien }}</td>
+                <td>{{ url('redirect_show_lien',{lien:page.lien}) }}</td>
                 <td>
                     {% if page.topPublic %}
                         <span class="glyphicon glyphicon-ok"></span>
