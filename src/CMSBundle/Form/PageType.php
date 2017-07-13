@@ -18,6 +18,8 @@ class PageType extends AbstractType
         $builder->add('titre')
             ->add('contenu', CKEditorType::class, [
             'config' => [
+                'fullPage'=> true,
+                'allowedContent'=> true,
                 'uiColor' => '#ffffff',
             ],
         ])->add('lien')->add('topPublic')->add('topPrivate')->add('password');
