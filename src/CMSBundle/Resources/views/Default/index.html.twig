@@ -31,8 +31,10 @@
         </article>
         <article class="col-md-12">
             <h2 class="col-md-12">N'hesitez plus</h2>
-            <div class="col-md-1"></div>
-            <form class="col-md-12" action="{{ path('fos_user_registration_register') }}">
+            <div class="col-md-6">
+                <a href="{{url('page_show',{id:1}) }}" class="btn btn-info btn-lg btn-block" target="_blank">Exemple</a>
+            </div>
+            <form class="col-md-6" action="{{ path('fos_user_registration_register') }}">
                 <input type="submit" class="btn btn-success btn-lg btn-block" value="Inscrivez vous"/>
             </form>
         </article>
