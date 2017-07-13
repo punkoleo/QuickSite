@@ -19,7 +19,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/{lien}")
+     * @Route("/{lien}", requirements={"lien": "//.+"})
      */
     public function redirectAction($lien)
     {

@@ -5,7 +5,11 @@ namespace CMSBundle\Controller;
 use CMSBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Page controller.
@@ -24,7 +28,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $pages = $em->getRepository('CMSBundle:Page')->findAll();
+        $pages = $em->getRepository('CMSBundle:Page')->findBy(['user'=>$this->getUser()]);
 
         return $this->render('page/index.html.twig', array(
             'pages' => $pages,
@@ -61,11 +65,63 @@ class PageController extends Controller
     /**
      * Finds and displays a page entity.
      *
+     * @Route("/{id}/p/", name="page_show_lien_protected", requirements={"id": "\d+"})
+     * @Method({"GET","POST"})
+     */
+    public function showProtectedAction(Request $request, Page $page)
+    {
+        $redirection = $this->redirectIfNotPublic($page);
+        if(!empty($redirection)) {
+            return $redirection;
+        }
+        // Si la page n'est pas protégée, on redirige vers la vue adequat
+        if(!$page->getTopPrivate()) {
+            return $this->redirectToRoute('page_show_lien',['lien'=>$page->getLien()]);
+        }
+
+        $password = $page->getPassword();
+
+        // On crée le formulaire de demande de password
+        $form = $this->createFormBuilder($page)
+            ->setAction($this->generateUrl('page_show_lien_protected', ['id' => $page->getId()]))
+            ->add("password",null,['required'=>true,'data'=>null])
+            ->setMethod('POSt')
+            ->getForm();
+        $form->handleRequest($request);
+
+        $topAffichePage = false;
+        // Si le form est bon
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($password != $page->getPassword()) {
+                $form->addError(new FormError("Mauvais password"));
+            } else {
+                $topAffichePage =true;
+            }
+        }
+
+        return $this->render('page/show_protected.html.twig', [
+            'topAffichePage' => $topAffichePage,
+            'form'=> $form->createView(),
+            'page'=>$page,
+        ]);
+    }
+
+    /**
+     * Finds and displays a page entity.
+     *
      * @Route("/{id}", name="page_show", requirements={"id": "\d+"})
      * @Method("GET")
      */
     public function showAction(Page $page)
     {
+        $redirection = $this->redirectIfNotPublic($page);
+        if(!empty($redirection)) {
+            return $redirection;
+        }
+        if($page->getTopPrivate()){
+            return $this->redirectToRoute('page_show_lien_protected',['id' => $page->getId()]);
+        }
+
         $deleteForm = $this->createDeleteForm($page);
 
         return $this->render('page/show.html.twig', array(
@@ -78,10 +134,17 @@ class PageController extends Controller
      * Finds and displays a page entity.
      *
      * @Route("/{lien}", name="page_show_lien")
-     * @Method("GET")
+     * @Method({"GET"})
      */
     public function showfromtokenAction(Page $page)
     {
+        $redirection = $this->redirectIfNotPublic($page);
+        if(!empty($redirection)) {
+            return $redirection;
+        }
+        if($page->getTopPrivate()){
+            return $this->redirectToRoute('page_show_lien_protected',['id'=>$page->getId()]);
+        }
         return $this->render('page/show.html.twig', array(
             'page' => $page
         ));
@@ -146,5 +209,15 @@ class PageController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Redirige vers l'accueil si la page n'est pas public (et qu'elle ne nous appartiens pas)
+     * @param Page $Page
+     */
+    private function redirectIfNotPublic(Page $Page) {
+        if(!$Page->getTopPublic() && $Page->getUser() != $this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
     }
 }
