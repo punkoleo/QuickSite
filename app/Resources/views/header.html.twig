@@ -23,6 +23,11 @@
                     </li>
                 </ul>
             {% endif %}
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{{url('page_show',{id:1}) }}" target="_blank">Exemple</a>
+                </li>
+            </ul>
             <span class="sr-only">Test</span>
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -35,6 +40,7 @@
                     </li>
                 {% else %}
                     <li><a href="{{path('fos_user_security_login') }}">Connexion</a></li>
+                    <li><a href="{{path('fos_user_registration_register') }}">Inscription</a></li>
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
